@@ -1,5 +1,6 @@
-from fastapi import APIRouter, UploadFile, File, Response
-from app.services.face_detection import detect_faces, detect_faces_video
+import cv2
+from fastapi import APIRouter, UploadFile, File, Response, WebSocket, WebSocketDisconnect
+from app.services.face_detection import detect_faces, detect_faces_video, detect_face_webcam
 import tempfile
 import os 
 router = APIRouter()
@@ -22,4 +23,21 @@ async def detect_video(file: UploadFile = File(...)):
     os.remove(tmp_path)
     os.remove(output_path)
     return Response(content=video_bytes, media_type="video/mp4")
+
+@router.websocket("/ws/webcam")
+async def webcam_stream(websocket: WebSocket):
+    await websocket.accept()
+    cap = cv2.VideoCapture(0)
+    try:
+        while True:
+            success, frame = cap.read()
+            if not success:
+                break
+            processed_frame = detect_face_webcam(frame)
+            await websocket.send_bytes(processed_frame)
+    except WebSocketDisconnect:
+        pass
+    finally:
+        cap.release()
+
     
