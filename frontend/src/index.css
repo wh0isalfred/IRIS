@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* --- The void --- */
+  --bg-void: #070a0c;
+  --bg-panel: #0f141a;
+  --border-subtle: #1f2933;
+
+  /* --- Text --- */
+  --text-primary: #eef4f7;
+  --text-secondary: #7b8a96;
+
+  /* --- The iris: catchlight on the outer ring, deeper blue within --- */
+  --catchlight: #7dd3fc;
+  --iris-deep: #38a3c4;
+
+  /* --- Signals --- */
+  --online: #4ade80;
+  --detect: #5eead4;
+
+  /* --- Fonts --- */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* The machine voice — labels, data, status, logs */
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
